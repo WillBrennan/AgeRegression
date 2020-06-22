@@ -1,0 +1,20 @@
+name: age_regression
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python==3.7.5
+  - pip
+  - pytorch==1.5
+  - torchvision==0.6.0
+  - cudatoolkit=10.1
+  - numpy==1.16.3
+  - pip:
+    - pytorch-ignite
+    - tensorboard
+    - yapf
+    - pytest
+    - jupyterlab
+    - pandas
+    - seaborn
+    - matplotlib
