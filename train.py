@@ -39,6 +39,9 @@ if __name__ == '__main__':
     args = parse_args()
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
 
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    logging.info(f'running training on {device}')
+
     logging.info('creating dataset and data loaders')
     train_dataset = AllAgeFacesDataset(args.train, use_augmentation=True)
     val_dataset = AllAgeFacesDataset(args.val, use_augmentation=False)
@@ -51,7 +54,7 @@ if __name__ == '__main__':
     )
 
     logging.info(f'creating model and optimizer with initial lr of {args.initial_lr}')
-    model = AgeRegressionModel().cuda()
+    model = AgeRegressionModel().to(device)
 
     optimizer = optim.Adam(params=model.parameters(), lr=args.initial_lr)
 
@@ -61,7 +64,7 @@ if __name__ == '__main__':
         model=model,
         optimizer=optimizer,
         loss_fn=nn.MSELoss(),
-        device='cuda',
+        device=device,
         non_blocking=True,
     )
 
@@ -72,7 +75,7 @@ if __name__ == '__main__':
             'mse': metrics.MeanSquaredError(),
             'mae': metrics.MeanAbsoluteError(),
         },
-        device='cuda',
+        device=device,
         non_blocking=True,
     )
 
