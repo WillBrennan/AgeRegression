@@ -2,6 +2,7 @@ from .dataset import AllAgeFacesDataset
 from .dataset import denormalize_image
 from .dataset import create_image_transform
 from .dataloaders import create_data_loaders
+from .imbalanced_sampler import ImbalancedDatasetSampler
 
 from .model import AgeRegressionModel
 
